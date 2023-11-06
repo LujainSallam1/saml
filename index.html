@@ -82,30 +82,34 @@
      
     <button id="login">Login with Keycloak</button>
 
-    <script>
-        const keycloak = Keycloak({ 
-            url: 'http://localhost:8080', 
-            realm: 'master', 
-            clientId: 'frontend', 
-            redirectUri: 'https://lujainsallam1.github.io/saml', 
-        });
+   <script>
+  const keycloak = Keycloak({
+    url: 'http://localhost:8080',
+    realm: 'master',
+    clientId: 'frontend',
+    redirectUri: 'https://lujainsallam1.github.io/saml',
+  });
 
-        document.getElementById('login').addEventListener('click', () => {
-            keycloak.login();
-        });
+  document.getElementById('login').addEventListener('click', () => {
+    keycloak.login();
+  });
 
-        keycloak.init({ onLoad: 'login-required' }).success((authenticated) => { 
-            if (authenticated) { 
-                const accessToken = keycloak.token; 
-                console.log( `Access Token:${accessToken}`)
-                alert("Access Token: " + accessToken);
-            } else { 
-                alert("User authentication failed!"); 
-            } 
-        }).error(() => { 
-            alert("Could not authenticate the user!"); 
-        });
-    </script>
+  keycloak
+    .init({ onLoad: 'login-required' })
+    .then((authenticated) => {
+      if (authenticated) {
+        const accessToken = keycloak.token;
+        console.log(`Access Token: ${accessToken}`);
+        alert("Access Token: " + accessToken);
+      } else {
+        alert("User authentication failed!");
+      }
+    })
+    .catch(() => {
+      alert("Could not authenticate the user!");
+    });
+</script>
+
     <div class="container">
         <h2>General Settings</h2>
         <form id="GeneralSettings">
