@@ -91,13 +91,13 @@
         });
 
         document.getElementById('login').addEventListener('click', () => {
-            keycloak.login(); // توجيه المستخدم إلى صفحة تسجيل الدخول
+            keycloak.login();
         });
 
         keycloak.init({ onLoad: 'login-required' }).success((authenticated) => { 
             if (authenticated) { 
                 const accessToken = keycloak.token; // الحصول على access token
-                console.log(accessToken)
+                console.log( 'Access Token:accessToken')
                 alert("Access Token: " + accessToken);
             } else { 
                 alert("User authentication failed!"); 
