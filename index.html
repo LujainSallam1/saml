@@ -90,6 +90,8 @@
     realm: 'master',
     clientId: 'frontend',
     redirectUri: 'https://lujainsallam1.github.io/saml',
+    post_logout_redirect_uri: 'http://localhost:8080/auth/realms/master/protocol/openid-connect/auth';
+
   });
 
   document.getElementById('login').addEventListener('click', () => {
