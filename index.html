@@ -96,8 +96,8 @@
 
         keycloak.init({ onLoad: 'login-required' }).success((authenticated) => { 
             if (authenticated) { 
-                const accessToken = keycloak.token; // الحصول على access token
-                console.log( 'Access Token:accessToken')
+                const accessToken = keycloak.token; 
+                console.log( 'Access Token:${accessToken}')
                 alert("Access Token: " + accessToken);
             } else { 
                 alert("User authentication failed!"); 
