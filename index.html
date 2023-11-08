@@ -108,7 +108,7 @@ keycloak
       console.log(`Access Token: ${accessToken}`);
 
       // Check if the user has the "admin" role
-      if (keycloak.hasResourceRole('admin')) {
+      if (keycloak.hasResourceRole('admin, resource')) {
         alert("Access Token: " + accessToken);
       } else {
         alert("User does not have admin role. Access denied.");
