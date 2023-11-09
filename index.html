@@ -1,56 +1,524 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>General Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        h5 {
+            font-size: 15px;
+            margin: 9px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .btn {
+            background-color: #337ab7;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .image {
+            cursor: pointer;
+            width: 15px;
+            height: 15px;
+
+
+        }
+
+        .radio {
+            display: flex;
+
+
+        }
+
+        .btn:hover {
+            background-color: #235a91;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js@16.1.0/dist/keycloak.js"></script>
 </head>
-<body class="bg-light">
-    <div class="container text-center mt-5">
-        <h1 class="display-4">Welcome to the Application</h1>
-        <p class="lead">Please log in to access the application</p>
-        <button id="loginButton" class="btn btn-primary">Log In</button>
+<body>
+    <h1>Keycloak Authentication</h1>
+     
+    <button id="login">access token</button>
+    <button id="logout">Logout</button>
+     <script src="keyloack.js"></script>
+    <div class="container">
+        <h2>General Settings</h2>
+        <form id="GeneralSettings">
+            <h5>Redirect URI
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The redirect uri to use when configuring the identity provider.')">
+
+            </h5>
+            <input type="url" name="redirectUri"
+                value="http://localhost:8080/realms/master/broker/saml-extended/endpoint" id="redirectUri">
+
+
+            <h5>Alias *
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The alias uniquely identifies an identity provider and it is also used to build the redirect uri.')">
+            </h5>
+
+            <input type="text" name="alias" required value="saml-extended" id="SamlExtended">
+            <h5>Display Name
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Friendly name for Identity Providers')">
+            </h5>
+            <input type="text" name="displayName" id="displayName">
+
+            <h5>Display Order
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Number defining the order of the providers in GUI (for example, on the Login page). The lowest number will be applied first.')">
+            </h5>
+
+            <input type="text" name="displayOrder" id="displayOrder">
+
+            <h5>Endpoints
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The alias uniquely identifies an identity provider and it is also used to build the redirect uri.')">
+
+            </h5>
+            <a href="http://localhost:8080/realms/master/broker/saml-extended/endpoint/descriptor">
+                SAML 2.0 Service Provider Metadata </a>
+            <h2>SAML Settings</h2>
+
+            <h5>Service Provider Entity ID
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The Entity ID that will be used to uniquely identify this SAML Service Provider.')">
+
+            </h5>
+            <input type="text" name="spEntity" id="spEntityId">
+
+            <h5>Identity Provider Entity ID
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The Entity ID used to validate the Issuer for received SAML assertions. If empty, no Issuer validation is performed.')">
+
+            </h5>
+            <input type="text" name="idpEntityId" id="idpEntityId">
+
+            <h5>Single Sign-On Service URL *
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The Url that must be used to send authentication requests (SAML AuthnRequest).')">
+            </h5>
+
+            <input type="url" name="ssoServiceUrl" id="ssoServiceUrl">
+
+            <h5>Single Logout Service URL
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The Url that must be used to send logout requests.')">
+            </h5>
+            <input type="url" name="sloServiceUrl" id="sloServiceUrl">
+
+            <h5>Backchannel Logout
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Does the external IDP support backchannel logout?')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="Backchannel" value="true" id="backchannelon">
+                <label for="on">on</label>
+                <input type="radio" name="Backchannel" value="false" id="backchanneloff" checked>
+                <label for="off">off</label>
+              
+            </div>
+
+
+            <h5>NameID Policy Format
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Specifies the URI reference corresponding to a name identifier format.')">
+            </h5>
+            </h5>
+            <select name="nameIdPolicy" id="nameIdPolicy">
+                <option value="persistent">Persistent</option>
+                <option value="transient">Transient</option>
+                <option value="emailAddress">Email</option>
+                <option value="kerberos">Kerberos</option>
+                <option value="X509SubjectName">X.509 Subject Name</option>
+                <option value="WindowsDomainQualifiedName">Windows Domain Qualified Name</option>
+                <option value="unspecified">Unspecified</option>Unspecified</option>
+            </select>
+
+            <h5>Principal Type
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Way to identify and track external users from the assertion. Default is using Subject NameID, alternatively you can set up identifying attribute.')">
+            </h5>
+            </h5>
+            <select name="principalType" id="principalType">
+                <option value="SUBJECT">Subject NameID</option>
+                <option value="ATTRIBUTE">Attribute [Name]</option>
+                <option value="FRIENDLY_ATTRIBUTE">Attribute [Friendly Name]</option>
+            </select>
+
+            <h5>Principal attribute
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Name or Friendly Name of the attribute used to identify external users.')">
+            </h5>
+            <input type="text" name="Principal attribute">
+
+
+
+            <h5>Allow Create
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Allow the external identity provider to create a new identifier to represent the principal.')">
+            </h5>
+
+            <div class="radio">
+                <input type="radio" name="allowCreate" value="true" id="allowCreateon">
+                <label for="on">on</label>
+                <input type="radio" name="allowCreate" value="false" id="allowCreateoff" checked>
+                <label for="off">off</label>
+            </div>
+            <h5>HTTP-POST Binding Response
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether to respond to requests using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used.')">
+            </h5>
+
+            <div class="radio">
+
+                <input type="radio" name="httpPostBindingResponse" value="true" id="httpPostBindingResponseon">
+                <label for="on">on</label>
+                <input type="radio" name="httpPostBindingResponse" value="false" id="httpPostBindingResponseoff"
+                    checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>HTTP-POST Binding for AuthnRequest
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether the AuthnRequest must be sent using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used')">
+            </h5>
+
+
+            <div class="radio">
+                <input type="radio" name="httpPostBindingAuthnRequest" value="true" id="httpPostBindingAuthnRequeston">
+                <label for="on">on</label>
+                <input type="radio" name="httpPostBindingAuthnRequest" value="false" id="httpPostBindingAuthnRequestoff"
+                    checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>HTTP-POST Binding Logout
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether to respond to requests using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="httpPostBindingLogout" value="true" id="httpPostBindingLogouton">
+                <label for="on">on</label>
+                <input type="radio" name="httpPostBindingLogout" value="false" id="httpPostBindingLogoutoff" checked>
+                <label for="off">off</label>
+            </div>
+
+
+            <h5>Want AuthnRequests Signed
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether the identity provider expects a signed AuthnRequest.')">
+            </h5>
+            </h5>
+            <div class="radio">
+
+                <input type="radio" name="wantAuthnRequestsSigned" value="true" id="wantAuthnRequestsSignedon">
+                <label for="on">on</label>
+                <input type="radio" name="wantAuthnRequestsSigned" value="false" id="wantAuthnRequestsSignedoff"
+                    checked>
+                <label for="off">off</label>
+
+            </div>
+            <select name="Signature algorithm" id="SignatureAlgorithm" disabled>
+                <option value="RSA_SHA1">RSA_SHA1</option>
+                <option value="RSA_SHA256">RSA_SHA256</option>
+                <option value="RSA_SHA256_MGF1">RSA_SHA256_MGF1</option>
+                <option value="RSA_SHA512">RSA_SHA512</option>
+                <option value="RSA_SHA512_MGF1">RSA_SHA512_MGF1</option>
+                <option value="DSA_SHA1">DSA_SHA1</option>
+            </select>
+            <select name="SAML signature key name " id="SAMLSignatureKeyName" disabled>
+                <option value="KEY-ID">KEY-ID</option>
+                <option value="NONE">NONE</option>
+                <option value="CERT_SUBJECT">CERT_SUBJECT</option>
+            </select>
+
+            <h5>Want Assertions Signed
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether this service provider expects a signed Assertion.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="wantAssertionsSigned" id="wantAssertionsSignedon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="wantAssertionsSigned" id="wantAssertionsSignedoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Want Assertions Encrypted
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether this service provider expects an encrypted Assertion.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="wantAssertionsEncrypted" id="wantAssertionsEncryptedon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="wantAssertionsEncrypted" id="wantAssertionsEncryptedoff" value="false"
+                    checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Force Authentication
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Indicates whether the identity provider must authenticate the presenter directly rather than rely on a previous security context.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="forceAuthentication" id="forceAuthenticationon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="forceAuthentication" id="forceAuthenticationoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Validate Signatures
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Enable/disable signature validation of external IDP signatures.')">
+            </h5>
+
+            <div class="radio">
+                <input type="radio" name="validateSignatures" value="true" id="validateSignatureson">
+                <label for="on">on</label>
+                <input type="radio" name="validateSignatures" value="false" id="validateSignaturesoff" checked>
+                <label for="off">off</label>
+            </div>
+            <H5>Validating X509 certificates
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('The certificate in PEM format that must be used to check for signatures. Multiple certificates can be entered, separated by comma (,).')">
+            </H5>
+            <input type="text" id="ValidatingX509Certificates" name="ValidatingX509Certificates" disabled>
+            <h5>Sign Service Provider Metadata
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Enable/disable signature of the provider SAML metadata.')">
+            </h5>
+
+            <div class="radio">
+                <input type="radio" name="signMetadata" id="signMetadataon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="signMetadata" id="signMetadataoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Pass Subject
+                <img src="question.png" class="image" alt="question mark" onclick="alert('')">
+            </h5>
+
+            <div class="radio">
+                <input type="radio" name="passSubject" id="passSubjecton" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="passSubject" id="passSubjectoff" value="false" checked>
+                <label for="off">off</label>
+
+            </div>
+
+            <h5>Allowed Clock Skew
+
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('During login phase, forward an optional login_hint query parameter to SAML AuthnRequest subject.')">
+            </h5>
+
+            <input type="text" name="allowedClockSkew" id="allowedClockSkew">
+
+            <h5>Attribute Consuming Service Index
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Index of the Attribute Consuming Service profile to request during authentication.')">
+            </h5>
+
+            <input type="text" name="attributeConsumingServiceIndex" id="attributeConsumingServiceIndex">
+
+            <h5>Attribute Consuming Service Name
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Name of the Attribute Consuming Service profile to advertise in the SP metadata.')">
+            </h5>
+
+            <input type="text" name="attributeConsumingServiceName" id="attributeConsumingServiceName">
+
+            <h2>Requested AuthnContext Constraints</h2>
+
+            <h5>Comparison
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Specifies the comparison method used to evaluate the requested context classes or statements. The default is *Exact*.')">
+            </h5>
+
+            <select name="comparison" id="comparison">
+                <option value="exact">Exact</option>
+                <option value="minimum">Minimum</option>
+                <option value="maximum">Maximum</option>
+                <option value="better">better</option>
+            </select>
+
+            <form class="form-horizontal">
+                <!-- Text input-->
+                <div id="ClassRefs_items" class="form-group">
+                    <h5> AuthnContext ClassRefs <img src="question.png" class="image" alt="question mark"
+                            onclick="alert('Ordered list of requested AuthnContext ClassRefs.')"> </h5>
+                    <div class="col-md-4 margin-bottom">
+                        <input id="authnContextClassRefs" name="authnContextClassRefs" type="text"
+                            class="form-control input-md">
+
+                    </div>
+                </div>
+            </form>
+
+            <button id="addClassRefs" class="btn add-more button-yellow uppercase" type="button">+ Add </button>
+            <button class="delete btn button-white uppercase">- Remove </button>
+
+            <form class="form-horizontal">
+                <!-- Text input-->
+                <div id="DeclRefs_items" class="form-group">
+                    <h5> AuthnContext DeclRefs <img src="question.png" class="image" alt="question mark"
+                            onclick="alert('Ordered list of requested AuthnContext DeclRefs.')"> </h5>
+                    <div class="col-md-4 margin-bottom">
+                        <input id="authnContextDeclRefs" name="authnContextDeclRefs" type="text"
+                            class="form-control input-md">
+
+                    </div>
+                </div>
+            </form>
+
+            <button id="addDeclRefs" class="btn add-more button-yellow uppercase" type="button">+ Add </button>
+            <button class="delete1 btn button-white uppercase">- Remove </button>
+
+            <h2>Advanced Settings</h2>
+
+            <h5>Store Tokens
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Enable/disable if tokens must be stored after authenticating users')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="storeToken" id="storeTokenon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="storeToken" id="storeTokenoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+            <h5>Stored Tokens Readable
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Enable/disable if new users can read any stored tokens. This assigns the broker.read-token role.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="storedTokensReadable" id="storedTokensReadableon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="storedTokensReadable" id="storedTokensReadableoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Trust Email
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('If enabled, email provided by this provider is not verified even if verification is enabled for the realm.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="trustEmail" id="trustEmailon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="trustEmail" id="trustEmailoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Account Linking Only
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('If true, users cannot log in through this provider. They can only link to this provider. This is useful if you do not want to allow login from the provider, but want to integrate with a provider')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="accountLinkingOnly" id="accountLinkingOnlyon" value="true">
+                <label for="on">on </label>
+                <input type="radio" name="accountLinkingOnly" id="accountLinkingOnlyoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+            <h5>Hide on Login Page
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('If hidden, login with this provider is possible only if requested explicitly, for example using the *kc_idp_hint* parameter.')">
+            </h5>
+            <div class="radio">
+                <input type="radio" name="hideLoginPage" id="hideLoginPageon" value="true">
+                <label for="on">on</label>
+                <input type="radio" name="hideLoginPage" id="hideLoginPageoff" value="false" checked>
+                <label for="off">off</label>
+            </div>
+
+
+            <h5>First Login Flow
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Alias of authentication flow, which is triggered after first login with this identity provider. Term *First Login* means that no Keycloak account is currently linked to the authenticated identity provider account.')">
+            </h5>
+            </h5>
+            <select name="firstLoginFlow" id="firstLoginFlow">
+                <option value="browser">browser</option>
+                <option value="direct grant">direct grant</option>
+                <option value="registration">registration</option>
+                <option value="reset credentials">Custom Flow 2</option>
+                <option value="firstBrokerLogin">First Broker Login</option>
+                <option value="docker auth">docker auth</option>
+            </select>
+
+            <h5>Post Login Flow
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Alias of authentication flow, which is triggered after each login with this identity provider. Useful if you want additional verification of each user authenticated with this identity provider (for example OTP). Leave this to *None* if you need no any additional authenticators to be triggered after login with this identity provider. Also note that authenticator implementations must assume that user is already set in ClientSession as identity provider already set it.')">
+            </h5>
+            </h5>
+            <select name="postLoginFlow" id="postLoginFlow">
+                <option value="browser">browser</option>
+                <option value="direct grant">direct grant</option>
+                <option value="registration">registration</option>
+                <option value="reset credentials">Custom Flow 2</option>
+                <option value="firstBrokerLogin">First Broker Login</option>
+                <option value="docker auth">docker auth</option>
+            </select>
+
+            <h5>Sync Mode
+                <img src="question.png" class="image" alt="question mark"
+                    onclick="alert('Default sync mode for all mappers. The sync mode determines when user data will be synced using the mappers. Possible values are: *legacy* to keep the behaviour before this option was introduced, *import* to only import the user once during first login of the user with this identity provider, *force* to always update the user during every login with this identity provider.')">
+            </h5>
+            </h5>
+            <select name="syncMode" id="syncMode">
+                <option value="Import">Import</option>
+                <option value="Lagacy">Lagacy</option>
+                <option value="Force">Force</option>
+            </select>
+
+            <button class="btn" type="submit" id="submit">Save</button>
+        </form>
     </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/keycloak-js@16.1.0/dist/keycloak.js"></script>
-
- <script>
-        // Initialize Keycloak
-        const keycloak = Keycloak({
-            url: 'http://localhost:8080',
-            realm: 'master',
-            clientId: 'frontend',
-            redirectUri: 'https://lujainsallam1.github.io/saml',
-        });
-
-        // Add event listener to the login button
-        document.getElementById('loginButton').addEventListener('click', () => {
-            keycloak.login();
-        });
-
-        // Initialize Keycloak and handle user authentication
-        keycloak.init({ onLoad: 'login-required' }).then((authenticated) => {
-            if (authenticated) {
-                // User is successfully authenticated
-                const tokenParsed = keycloak.tokenParsed;
-                const roles = tokenParsed.realm_access.roles;
-
-                if (roles.includes("admin")) {
-                    // User has 'admin' role, you can redirect to the admin page
-                    window.location.href = 'saml.html';
-                } else {
-                    
-                    // User does not have admin role, log them out
-                    window.location.href = 'logout.html';
-                    keycloak.logout();
-                }
-            } else {
-                alert("Authentication failed.");
-            }
-        });
-    </script>
+    <script src="RadioButtonController.js"></script>
+    <script src="ApiDataSender.js"></script>
 </body>
-</html>
 
+</html>
