@@ -83,6 +83,11 @@
     <button id="login">access token</button>
     <button id="logout">Logout</button>
      <script>
+            const keycloak = Keycloak({
+            url: 'http://localhost:8080/auth',
+            realm: 'master',
+            clientId: 'frontend',
+        });
      document.getElementById('logout').addEventListener('click', () => {
      keycloak.logout();
       });
