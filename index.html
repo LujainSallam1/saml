@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Welcome to the Application</h1>
+        <p class="lead">Please log in to access the application</p>
+        <button id="loginButton" class="btn btn-primary">Log In</button>
+    </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/keycloak-js@16.1.0/dist/keycloak.js"></script>
+
+ <script>
+        // Initialize Keycloak
+        const keycloak = Keycloak({
+            url: 'http://localhost:8080',
+            realm: 'master',
+            clientId: 'frontend',
+            redirectUri: 'https://lujainsallam1.github.io/saml',
+        });
+
+        // Add event listener to the login button
+        document.getElementById('loginButton').addEventListener('click', () => {
+            keycloak.login();
+        });
+
+        // Initialize Keycloak and handle user authentication
+        keycloak.init({ onLoad: 'login-required' }).then((authenticated) => {
+            if (authenticated) {
+                // User is successfully authenticated
+                const tokenParsed = keycloak.tokenParsed;
+                const roles = tokenParsed.realm_access.roles;
+
+                if (roles.includes("admin")) {
+                    // User has 'admin' role, you can redirect to the admin page
+                    window.location.href = 'saml.html';
+                } else {
+                    // User does not have admin role, log them out
+                    keycloak.logout();
+                }
+            } else {
+                alert("Authentication failed.");
+            }
+        });
+    </script>
+</body>
+</html>
+
