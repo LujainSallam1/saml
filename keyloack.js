@@ -12,13 +12,9 @@ const keycloak = Keycloak({
   });
   
   document.getElementById('logout').addEventListener('click', () => {
-      const idToken = keycloak.token;
+     const clientid='frontend';
      const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
-     const logoutURL = keycloak.createLogoutUrl({
-        id_token_hint: idToken, // إرسال ID Token كمعلمة
-        post_logout_redirect_uri: postLogoutRedirect,
-     });
-     window.location.href = logoutURL;
+     window.location.href =http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}& client_id=${clientid};
   });
   
   keycloak
