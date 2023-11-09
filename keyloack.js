@@ -3,7 +3,7 @@ const keycloak = Keycloak({
     realm: 'master',
     clientId: 'frontend',
     redirectUri: 'https://lujainsallam1.github.io/saml',
-       enableDebug: true,
+    enableDebug: true,
     
   });
   
