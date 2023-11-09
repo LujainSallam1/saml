@@ -41,7 +41,9 @@
                     // User has 'admin' role, you can redirect to the admin page
                     window.location.href = 'saml.html';
                 } else {
+                    
                     // User does not have admin role, log them out
+                    window.location.href = 'logout.html';
                     keycloak.logout();
                 }
             } else {
