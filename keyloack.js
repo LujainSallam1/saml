@@ -4,6 +4,7 @@ const keycloak = Keycloak({
     clientId: 'frontend',
     redirectUri: 'https://lujainsallam1.github.io/saml',
        enableDebug: true,
+    
   });
   
   document.getElementById('login').addEventListener('click', () => {
@@ -11,11 +12,6 @@ const keycloak = Keycloak({
   });
   
   document.getElementById('logout').addEventListener('click', () => {
-       const idToken = keycloak.token;
-      console.log(idToken);
-     const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
-       console.log(postLogoutRedirect);
-
        keycloak.logout({ post_logout_redirect_uri: postLogoutRedirect, id_token_hint: idToken });
   });
   
@@ -23,6 +19,10 @@ const keycloak = Keycloak({
     .init({ onLoad: 'login-required' })
     .then((authenticated) => {
       if (authenticated) {
+          const idToken = keycloak.token;
+      console.log(idToken);
+     const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
+       console.log(postLogoutRedirect);
         const accessToken = keycloak.token;
         console.log(`Access Token: ${accessToken}`);
   
