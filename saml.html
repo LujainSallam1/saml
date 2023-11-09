@@ -79,19 +79,20 @@
 </head>
 <body>
     <h1>Keycloak Authentication</h1>
-     
-    <button id="login">access token</button>
     <button id="logout">Logout</button>
-     <script>
+ <script>
             const keycloak = Keycloak({
             url: 'http://localhost:8080/auth',
             realm: 'master',
             clientId: 'frontend',
+            redirectUri: 'https://lujainsallam1.github.io/saml',
+            enableDebug: true,
         });
      document.getElementById('logout').addEventListener('click', () => {
      keycloak.logout();
+         
       });
-     </script>
+ </script>
     <div class="container">
         <h2>General Settings</h2>
         <form id="GeneralSettings">
