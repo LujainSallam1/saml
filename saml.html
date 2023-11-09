@@ -89,6 +89,18 @@
             redirectUri: 'https://lujainsallam1.github.io/saml',
             enableDebug: true,
         });
+     keycloak
+    .init({ onLoad: 'login-required' })
+    .then((authenticated) => {
+        if (authenticated) {
+        } else {
+            alert("Authentication failed.");
+        }
+    })
+    .catch(() => {
+        alert("Could not authenticate the user!");
+    });
+
 
         document.getElementById('logout').addEventListener('click', () => {
             const idToken = keycloak.token;
