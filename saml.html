@@ -81,17 +81,25 @@
     <h1>Keycloak Authentication</h1>
     <button id="logout">Logout</button>
  <script>
-            const keycloak = Keycloak({
+              <script>
+        const keycloak = Keycloak({
             url: 'http://localhost:8080',
             realm: 'master',
             clientId: 'frontend',
             redirectUri: 'https://lujainsallam1.github.io/saml',
             enableDebug: true,
         });
-     document.getElementById('logout').addEventListener('click', () => {
-     keycloak.logout();
-         
-      });
+
+        document.getElementById('logout').addEventListener('click', () => {
+            const idToken = keycloak.token;
+            const postLogoutRedirect = 'https://lujainsallam1.github.io/saml'; 
+            const logoutURL = keycloak.createLogoutUrl({
+                id_token_hint: idToken,
+                post_logout_redirect_uri: postLogoutRedirect
+            });
+            keycloak.logout({ redirectUri: logoutURL });
+        });
+    </script>
  </script>
     <div class="container">
         <h2>General Settings</h2>
