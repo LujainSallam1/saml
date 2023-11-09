@@ -33,9 +33,10 @@ const keycloak = Keycloak({
           console.log("User has 'admin' role");
         } else {
           alert("User does not have admin role. Access denied.");
-          keycloak.logout();
-                     console.log(`idToken: ${idToken}`);
-        console.log(`postLogoutRedirect: ${postLogoutRedirect}`);
+             const clientid='frontend';
+             const postLogoutRedirect = 'https://lujainsallam1.github.io/saml/';
+             window.location.href =`http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientid}`;
+         
         }
         console.log("Access Token:", keycloak.token);
 
