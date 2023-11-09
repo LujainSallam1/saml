@@ -13,11 +13,12 @@ const keycloak = Keycloak({
   
   document.getElementById('logout').addEventListener('click', () => {
       const idToken = keycloak.token;
-     console.log(`idToken: ${idToken}`);
      const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
-      console.log(`postLogoutRedirect: ${postLogoutRedirect}`);
-
-       keycloak.logout({ post_logout_redirect_uri: postLogoutRedirect, id_token_hint: idToken });
+     const logoutURL = keycloak.createLogoutUrl({
+        id_token_hint: idToken, // إرسال ID Token كمعلمة
+        post_logout_redirect_uri: postLogoutRedirect,
+     });
+     keycloak.logout({logoutURL});
   });
   
   keycloak
