@@ -81,7 +81,7 @@
     <h1>Keycloak Authentication</h1>
     <button id="logout">Logout</button>
  <script>
-              <script>
+        
         const keycloak = Keycloak({
             url: 'http://localhost:8080',
             realm: 'master',
@@ -99,7 +99,6 @@
             });
             keycloak.logout({ redirectUri: logoutURL });
         });
-    </script>
  </script>
     <div class="container">
         <h2>General Settings</h2>
