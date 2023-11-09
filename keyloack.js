@@ -18,7 +18,7 @@ const keycloak = Keycloak({
         id_token_hint: idToken, // إرسال ID Token كمعلمة
         post_logout_redirect_uri: postLogoutRedirect,
      });
-     keycloak.logout({logoutURL});
+     window.location.href = logoutUrl;
   });
   
   keycloak
