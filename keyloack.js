@@ -20,9 +20,10 @@ const keycloak = Keycloak({
     .then((authenticated) => {
       if (authenticated) {
           const idToken = keycloak.token;
-      console.log(idToken);
-     const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
-       console.log(postLogoutRedirect);
+         console.log(`idToken: ${idToken}`);
+        const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
+             console.log(`postLogoutRedirect: ${postLogoutRedirect}`);
+
         const accessToken = keycloak.token;
         console.log(`Access Token: ${accessToken}`);
   
@@ -36,12 +37,15 @@ const keycloak = Keycloak({
         } else {
           alert("User does not have admin role. Access denied.");
           keycloak.logout();
+                     console.log(`idToken: ${idToken}`);
+        console.log(`postLogoutRedirect: ${postLogoutRedirect}`);
         }
         console.log("Access Token:", keycloak.token);
 
       }
    else {
         alert("User authentication failed!");
+       
       }
     })
     .catch(() => {
