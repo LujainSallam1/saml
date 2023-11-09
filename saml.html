@@ -82,20 +82,57 @@
 <body>
     <h1>Keycloak Authentication</h1>
     <button id="logout">Logout</button>
-    >
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container text-center mt-5">
+        <p class="lead">Please log in to access the application</p>
+        <button id="loginButton" class="btn btn-primary">Log In</button>
+        <button id="logout" class="btn btn-danger">Log Out</button>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/keycloak/15.0.2/keycloak.js"></script>
 
     <script>
         // Initialize Keycloak
         const keycloak = Keycloak({
-            url: 'http://localhost:8080/auth',
+            url: 'http://localhost:8080',
             realm: 'master',
             clientId: 'frontend',
+        });
+
+        // Add event listener to the login button
+        document.getElementById('loginButton').addEventListener('click', () => {
+            keycloak.login();
         });
 
         // Initialize Keycloak and handle user authentication
         keycloak.init({ onLoad: 'login-required' }).then((authenticated) => {
             if (authenticated) {
-                // User is successfully authenticated, you can add additional behavior here
+                // User is successfully authenticated
+                const tokenParsed = keycloak.tokenParsed;
+                const roles = tokenParsed.realm_access.roles;
+
+                if (roles.includes("admin")) {
+                    // User has 'admin' role, you can redirect to the admin page
+                    window.location.href = 'saml.html';
+                } else {
+                    // User does not have admin role, log them out
+                    window.location.href = 'logout.html';
+                    keycloak.logout();
+                }
+                console.log("Access Token:", keycloak.token);
+
             } else {
                 alert("Authentication failed.");
             }
@@ -104,10 +141,16 @@
         // Add event listener to the logout button
         document.getElementById('logout').addEventListener('click', () => {
             const idToken = keycloak.token;
+            console.log("idToken:", idToken);
             const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
+            console.log("postLogoutRedirect:",postLogoutRedirect);
+
             keycloak.logout({ post_logout_redirect_uri: postLogoutRedirect, id_token_hint: idToken });
         });
     </script>
+</body>
+</html>
+
     <div class="container">
         <h2>General Settings</h2>
         <form id="GeneralSettings">
