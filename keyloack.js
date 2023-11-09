@@ -14,7 +14,7 @@ const keycloak = Keycloak({
   document.getElementById('logout').addEventListener('click', () => {
      const clientid='frontend';
      const postLogoutRedirect = 'https://lujainsallam1.github.io/saml';
-     window.location.href =http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}& client_id=${clientid};
+     window.location.href =`http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}& client_id=${clientid}`;
   });
   
   keycloak
