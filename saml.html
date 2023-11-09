@@ -81,12 +81,10 @@
     <h1>Keycloak Authentication</h1>
     <button id="logout">Logout</button>
  <script>
-        
         const keycloak = Keycloak({
             url: 'http://localhost:8080',
             realm: 'master',
             clientId: 'frontend',
-            redirectUri: 'https://lujainsallam1.github.io/saml',
             enableDebug: true,
         });
      keycloak
