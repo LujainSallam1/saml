@@ -123,6 +123,15 @@ buttonInput.addEventListener('click', () => {
             delete data.config[key];
         }
     }
+    if (Array.isArray(data.config.authnContextClassRefs) && data.config.authnContextClassRefs.length === 0) {
+        delete data.config.authnContextClassRefs;
+    }
+
+    if (Array.isArray(data.config.authnContextDeclRefs) && data.config.authnContextDeclRefs.length === 0) {
+        delete data.config.authnContextDeclRefs;
+    }
+
+    
 
     // إرسال البيانات إلى الخادم
     console.log(data);
