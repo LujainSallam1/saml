@@ -1,3 +1,4 @@
+let accessToken;
 const keycloak = Keycloak({
     url: 'http://localhost:8080',
     realm: 'master',
@@ -21,7 +22,7 @@ const keycloak = Keycloak({
     .init({ onLoad: 'login-required' })
     .then((authenticated) => {
       if (authenticated) {
-        const accessToken = keycloak.token;
+        accessToken = keycloak.token;
         console.log(`Access Token: ${accessToken}`);
   
         // Check if the user has the "admin" role
