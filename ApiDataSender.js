@@ -104,6 +104,20 @@ buttonInput.addEventListener('click', () => {
             "principalType": principalType,
         }
     };
+    
+    for (const key in data) {
+        if (!data[key]) {
+            delete data[key];
+        }
+    }
+
+    // التحقق من قيمة الحقول
+    for (const key in data) {
+        if (typeof data[key] === 'string' && !data[key].trim()) {
+            console.error(`حقل ${key} يجب أن يحتوي على قيمة.`);
+            return;
+        }
+    }
 
     fetch(url, {
         method: 'POST',
