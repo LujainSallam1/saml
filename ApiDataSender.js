@@ -104,19 +104,27 @@ buttonInput.addEventListener('click', () => {
             "principalType": principalType,
         }
     };
-    
-    for (const key in data) {
-        if (!data[key]) {
-            delete data[key];
+    function removeEmptyStrings(obj) {
+        for (const key in obj) {
+            if (typeof obj[key] === 'string' && obj[key].trim() === "") {
+                delete obj[key];
+            } else if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+                removeEmptyStrings(obj[key]);
+            }
         }
     }
 
-    // التحقق من قيمة الحقول
-    for (const key in data) {
-        if (typeof data[key] === 'string' && !data[key].trim() === "") {
-          delete data[key];
+    removeEmptyStrings(data);
+
+    // التحقق من وجود قيم في الحقول داخل config
+    const configKeys = Object.keys(data.config);
+    for (const key of configKeys) {
+        if (typeof data.config[key] === 'string' && data.config[key].trim() === "") {
+            delete data.config[key];
         }
     }
+
+    // إرسال البيانات إلى الخادم
     console.log(data);
 
     fetch(url, {
