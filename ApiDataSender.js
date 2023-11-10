@@ -106,14 +106,14 @@ buttonInput.addEventListener('click', () => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-             'Authorization': ` Bearer ${accessToken} `
+             'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify({ data: data })
     })
         .then(response => response.json())
         .then(data => {
             `displayData.textContent = Data received: ${JSON.stringify(data)}`;
-
+              console.log(`Bearer ${accessToken}`)
         })
         .catch(error => {
             console.error('error', error);
