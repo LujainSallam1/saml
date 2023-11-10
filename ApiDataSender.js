@@ -108,7 +108,7 @@ buttonInput.addEventListener('click', () => {
             'Content-Type': 'application/json',
              'Authorization': `Bearer ${accessToken}`
         },
-        body: JSON.stringify({ data: data })
+        body: JSON.stringify({ data })
     })
         .then(response => response.json())
         .then(data => {
