@@ -105,7 +105,8 @@ buttonInput.addEventListener('click', () => {
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+             'Authorization': ` Bearer ${accessToken} `
         },
         body: JSON.stringify({ data: data })
     })
