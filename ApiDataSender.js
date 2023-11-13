@@ -26,21 +26,10 @@ buttonInput.addEventListener('click', () => {
     keycloak.updateToken(180).then((bool) => {
     if (bool) {
       console.log("Token is updated");
-
-      // الحصول على الـ Access Token الجديد
       const newAccessToken = keycloak.token;
-
-      // الكود الذي قمت بتوفيره هنا
-      // ...
+     console.log("update access token")
 
       // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
-      sendHttpRequest(newAccessToken, data, url);
-    } else {
-      console.log("Token is not updated");
-    }
-  });
-});
-
     
   
     const authnContextClassRefs=[]
@@ -156,18 +145,24 @@ buttonInput.addEventListener('click', () => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-             'Authorization': `Bearer ${accessToken}`
+             'Authorization': `Bearer ${newAccessToken}`
         },
         body: JSON.stringify(data)
     })
         .then(response => response.json())
         .then(data => {
             `displayData.textContent = Data received: ${JSON.stringify(data)}`;
-              console.log(`Bearer ${accessToken}`)
+              console.log(`Bearer ${newAccessToken}`)
         })
         .catch(error => {
             console.error('error', error);
         });
         document.getElementById("ValidatingX509Certificates").value='';
 });
+         } else {
+      console.log("Token is not updated");
+    }
+  });
+});
+
 
