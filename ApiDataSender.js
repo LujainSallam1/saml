@@ -105,7 +105,7 @@ buttonInput.addEventListener('click', () => {
             "postBindingAuthnRequest":wantAuthnRequestsSigned_value,
             "forceAuthn": forceAuthentication_value,
             "attributeConsumingServiceIndex": attributeConsumingServiceIndex,
-            "principalType": principalType,
+            "principalType": principalType
         }
     };
     function removeEmptyStrings(obj) {
