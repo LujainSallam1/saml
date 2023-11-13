@@ -148,15 +148,18 @@ buttonInput.addEventListener('click', () => {
              'Authorization': `Bearer ${newAccessToken}`
         },
         body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(data => {
-            `displayData.textContent = Data received: ${JSON.stringify(data)}`;
-              console.log(`Bearer ${newAccessToken}`)
-        })
-        .catch(error => {
-            console.error('error', error);
-        });
+    })then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();  // قم بتحويل الاستجابة إلى JSON
+})
+.then(data => {
+    console.log('Data received:', data);
+})
+.catch(error => {
+    console.error('Error:', error);
+});
         document.getElementById("ValidatingX509Certificates").value='';
          } else {
       console.log("Token is not updated");
