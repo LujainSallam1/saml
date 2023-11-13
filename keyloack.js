@@ -44,8 +44,11 @@ keycloak
             } else {
               console.log("Token is not updated");
             }
+          }).catch((error)) => {
+          console.error("error ubdating token", error);
           });
-        }, 126000);
+        
+        }, 10000);
       }
     } else {
       alert("User authentication failed!");
