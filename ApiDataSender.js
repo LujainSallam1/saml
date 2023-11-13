@@ -27,7 +27,6 @@ buttonInput.addEventListener('click', () => {
     if (bool) {
       console.log("Token is updated");
       const newAccessToken = keycloak.token;
-     console.log("update access token")
 
       // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
     
@@ -149,22 +148,25 @@ fetch(url, {
     },
     body: JSON.stringify(data)
 })
-.then(response => {
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.text();  // قم بالحصول على نص الاستجابة
-})
-.then(responseText => {
-    console.log('Response Text:', responseText);
-    return JSON.parse(responseText);  // قم بتحويل النص إلى JSON
-})
-.then(data => {
-    console.log('Data received:', data);
-})
-.catch(error => {
-    console.error('Error:', error);
-});
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(responseText => {
+        console.log('Response Text:', responseText);
+
+        // تحويل النص إلى JSON
+        const jsonData = JSON.parse(responseText);
+        
+        console.log('Data received:', jsonData);
+        
+        // استخدم jsonData كما تحتاج
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 document.getElementById("ValidatingX509Certificates").value = '';
 } else {
     console.log("Token is not updated");
