@@ -21,7 +21,7 @@ const nameIdPolicy_input = document.getElementById("nameIdPolicy");
 const SignatureAlgorithm_input=document.getElementById("SignatureAlgorithm");
 const SAMLSignatureKeyName_input=document.getElementById("SAMLSignatureKeyName");
 const ValidatingX509Certificates_input=document.getElementById("ValidatingX509Certificates");
-const newAccessToken;
+let newAccessToken;
 buttonInput.addEventListener('click', () => {
     keycloak.updateToken(180).then((bool) => {
     if (bool) {
