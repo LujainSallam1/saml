@@ -44,7 +44,7 @@ keycloak
             } else {
               console.log("Token is not updated");
             }
-          }).catch((error)) => {
+          }).catch((error) => {
           console.error("error ubdating token", error);
           });
         
