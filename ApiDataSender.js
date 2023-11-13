@@ -22,11 +22,6 @@ const SignatureAlgorithm_input=document.getElementById("SignatureAlgorithm");
 const SAMLSignatureKeyName_input=document.getElementById("SAMLSignatureKeyName");
 const ValidatingX509Certificates_input=document.getElementById("ValidatingX509Certificates");
 let newAccessToken;
-buttonInput.addEventListener('click', () => {
-    keycloak.updateToken(180).then((bool) => {
-    if (bool) {
-      console.log("Token is updated");
-      newAccessToken = keycloak.token;
 
       // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
     
@@ -135,7 +130,11 @@ buttonInput.addEventListener('click', () => {
         delete data.config.authnContextDeclRefs;
     }
 
-    
+    keycloak.updateToken(180).then((bool) => {
+    if (bool) {
+      console.log("Token is updated");
+      newAccessToken = keycloak.token;
+
 
     // إرسال البيانات إلى الخادم
 console.log(data);
