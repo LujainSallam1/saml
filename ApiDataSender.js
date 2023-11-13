@@ -158,7 +158,6 @@ buttonInput.addEventListener('click', () => {
             console.error('error', error);
         });
         document.getElementById("ValidatingX509Certificates").value='';
-});
          } else {
       console.log("Token is not updated");
     }
