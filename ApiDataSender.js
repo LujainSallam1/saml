@@ -23,12 +23,6 @@ const SAMLSignatureKeyName_input=document.getElementById("SAMLSignatureKeyName")
 const ValidatingX509Certificates_input=document.getElementById("ValidatingX509Certificates");
 
 buttonInput.addEventListener('click', () => {
-    keycloak.updateToken(180).then((bool) => {
-    if (bool) {
-      console.log("Token is updated");
-      const newAccessToken = keycloak.token;
-
-      // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
     
   
     const authnContextClassRefs=[]
@@ -68,19 +62,21 @@ buttonInput.addEventListener('click', () => {
         "displayName": Display_Name,
         "internalId": "a3e9b939-357f-4bff-bac6-8225aec4a9e4",
         "providerId": "saml-extended",
-        "enabled": "true",
+        "enabled": true,
         "updateProfileFirstLoginMode": "on",
         "trustEmail": trustEmail_value,
         "storeToken": storeToken_value,
         "addReadTokenRoleOnCreate": storedTokensReadable_value,
-        "authenticateByDefault": "false",
+        "authenticateByDefault": false,
         "linkOnly": accountLinkingOnly_value,
         "firstBrokerLoginFlowAlias": firstLoginFlow,
         "postBrokerLoginFlowAlias": postLoginFlow,
         config: {
             "postBindingLogout": httpPostBindingLogout_value,
+            "authnContextClassRefs": authnContextClassRefs,
             "postBindingResponse": httpPostBindingResponse_value,
             "singleLogoutServiceUrl": Single_Logout_Service_URL,
+            "authnContextDeclRefs": authnContextDeclRefs,
             "backchannelSupported": backchannel_value,
             "xmlSigKeyInfoKeyNameTransformer":SAMLSignatureKeyName,
             "idpEntityId": Identity_Provider_Entity_ID,
@@ -108,6 +104,7 @@ buttonInput.addEventListener('click', () => {
             "principalType": principalType,
         }
     };
+    
     function removeEmptyStrings(obj) {
         for (const key in obj) {
             if (typeof obj[key] === 'string' && obj[key].trim() === "") {
@@ -135,42 +132,23 @@ buttonInput.addEventListener('click', () => {
         delete data.config.authnContextDeclRefs;
     }
 
-    
 
-    // إرسال البيانات إلى الخادم
-console.log(data);
 
-fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${newAccessToken}`
-    },
-    body: JSON.stringify(data)
-})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.text();
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+             'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(data)
     })
-    .then(responseText => {
-        console.log('Response Text:', responseText);
-
-        // تحويل النص إلى JSON
-        const jsonData = JSON.parse(responseText);
-        
-        console.log('Data received:', jsonData);
-        
-        // استخدم jsonData كما تحتاج
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-document.getElementById("ValidatingX509Certificates").value = '';
-} else {
-    console.log("Token is not updated");
-}
+        .then(response => response.json())
+        .then(data => {
+            `displayData.textContent = Data received: ${JSON.stringify(data)}`;
+              console.log(`Bearer ${accessToken}`)
+        })
+        .catch(error => {
+            console.error('error', error);
+        });
+        document.getElementById("ValidatingX509Certificates").value='';
 });
-    });
-
