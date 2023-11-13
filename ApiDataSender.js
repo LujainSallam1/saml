@@ -167,4 +167,3 @@ document.getElementById("ValidatingX509Certificates").value = '';
     console.log("Token is not updated");
 }
 });
-
