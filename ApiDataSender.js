@@ -23,6 +23,24 @@ const SAMLSignatureKeyName_input=document.getElementById("SAMLSignatureKeyName")
 const ValidatingX509Certificates_input=document.getElementById("ValidatingX509Certificates");
 
 buttonInput.addEventListener('click', () => {
+    keycloak.updateToken(180).then((bool) => {
+    if (bool) {
+      console.log("Token is updated");
+
+      // الحصول على الـ Access Token الجديد
+      const newAccessToken = keycloak.token;
+
+      // الكود الذي قمت بتوفيره هنا
+      // ...
+
+      // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
+      sendHttpRequest(newAccessToken, data, url);
+    } else {
+      console.log("Token is not updated");
+    }
+  });
+});
+
     
   
     const authnContextClassRefs=[]
