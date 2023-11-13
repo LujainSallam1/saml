@@ -138,7 +138,6 @@ let newAccessToken;
 
     // إرسال البيانات إلى الخادم
 console.log(data);
-
 fetch(url, {
     method: 'POST',
     headers: {
@@ -147,17 +146,17 @@ fetch(url, {
     },
     body: JSON.stringify(data)
 })
-    .then(response => response.json())
-        .then(data => {
-            `displayData.textContent = Data received: ${JSON.stringify(data)}`;
-              console.log(`Bearer ${accessToken}`)
-        })
-        .catch(error => {
-            console.error('error', error);
-        });
+.then(response => response.json())
+.then(data => {
+    displayData.textContent = `Data received: ${JSON.stringify(data)}`;
+    console.log(`Bearer ${accessToken}`);
+})
+.catch(error => {
+    console.error('error', error);
+});
 document.getElementById("ValidatingX509Certificates").value = '';
 } else {
     console.log("Token is not updated");
 }
 });
-    });
+
