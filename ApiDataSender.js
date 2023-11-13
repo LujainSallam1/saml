@@ -21,8 +21,14 @@ const nameIdPolicy_input = document.getElementById("nameIdPolicy");
 const SignatureAlgorithm_input=document.getElementById("SignatureAlgorithm");
 const SAMLSignatureKeyName_input=document.getElementById("SAMLSignatureKeyName");
 const ValidatingX509Certificates_input=document.getElementById("ValidatingX509Certificates");
-
+let newAccessToken;
 buttonInput.addEventListener('click', () => {
+    keycloak.updateToken(180).then((bool) => {
+    if (bool) {
+      console.log("Token is updated");
+      newAccessToken = keycloak.token;
+
+      // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
     
   
     const authnContextClassRefs=[]
@@ -62,12 +68,12 @@ buttonInput.addEventListener('click', () => {
         "displayName": Display_Name,
         "internalId": "a3e9b939-357f-4bff-bac6-8225aec4a9e4",
         "providerId": "saml-extended",
-        "enabled": true,
+        "enabled": "true",
         "updateProfileFirstLoginMode": "on",
         "trustEmail": trustEmail_value,
         "storeToken": storeToken_value,
         "addReadTokenRoleOnCreate": storedTokensReadable_value,
-        "authenticateByDefault": false,
+        "authenticateByDefault": "false",
         "linkOnly": accountLinkingOnly_value,
         "firstBrokerLoginFlowAlias": firstLoginFlow,
         "postBrokerLoginFlowAlias": postLoginFlow,
@@ -99,7 +105,7 @@ buttonInput.addEventListener('click', () => {
             "postBindingAuthnRequest":wantAuthnRequestsSigned_value,
             "forceAuthn": forceAuthentication_value,
             "attributeConsumingServiceIndex": attributeConsumingServiceIndex,
-            "principalType": principalType
+            "principalType": principalType,
         }
     };
     function removeEmptyStrings(obj) {
@@ -132,23 +138,33 @@ buttonInput.addEventListener('click', () => {
     
 
     // إرسال البيانات إلى الخادم
-    console.log(data);
+console.log(data);
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-             'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(data => {
-            `displayData.textContent = Data received: ${JSON.stringify(data)}`;
-              console.log(`Bearer ${accessToken}`)
-        })
-        .catch(error => {
-            console.error('error', error);
-        });
-        document.getElementById("ValidatingX509Certificates").value='';
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${newAccessToken}`
+    },
+    body: JSON.stringify(data)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.text();
+})
+.then(data => {
+    // Parse JSON if data is not empty, otherwise return an empty object
+    const parsedData = data ? JSON.parse(data) : {};
+    console.log(`Data received: ${JSON.stringify(parsedData)}`);
+})
+.catch(error => {
+    console.error('Error:', error);
 });
+document.getElementById("ValidatingX509Certificates").value = '';
+} else {
+    console.log("Token is not updated");
+}
+});
+    });
