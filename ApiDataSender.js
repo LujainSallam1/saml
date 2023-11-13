@@ -153,7 +153,11 @@ fetch(url, {
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.json();  // قم بتحويل الاستجابة إلى JSON
+    return response.text();  // قم بالحصول على نص الاستجابة
+})
+.then(responseText => {
+    console.log('Response Text:', responseText);
+    return JSON.parse(responseText);  // قم بتحويل النص إلى JSON
 })
 .then(data => {
     console.log('Data received:', data);
@@ -161,7 +165,6 @@ fetch(url, {
 .catch(error => {
     console.error('Error:', error);
 });
-
 document.getElementById("ValidatingX509Certificates").value = '';
 } else {
     console.log("Token is not updated");
