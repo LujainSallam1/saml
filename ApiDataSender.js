@@ -151,7 +151,7 @@ buttonInput.addEventListener('click', () => {
     })
         .then(response => response.json())
         .then(data => {
-            displayData.textContent = `Data received: ${JSON.stringify(data)}`;
+            `displayData.textContent = Data received: ${JSON.stringify(data)}`;
               console.log(`Bearer ${newAccessToken}`)
         })
         .catch(error => {
