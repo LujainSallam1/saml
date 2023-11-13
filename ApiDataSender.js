@@ -141,30 +141,29 @@ buttonInput.addEventListener('click', () => {
     // إرسال البيانات إلى الخادم
     console.log(data);
 
-    fetch(url, {
+       fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
              'Authorization': `Bearer ${newAccessToken}`
         },
         body: JSON.stringify(data)
-    })then(response => {
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();  // قم بتحويل الاستجابة إلى JSON
-})
-.then(data => {
-    console.log('Data received:', data);
-})
-.catch(error => {
-    console.error('Error:', error);
-});
-        document.getElementById("ValidatingX509Certificates").value='';
-         } else {
-      console.log("Token is not updated");
-    }
-  });
-});
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();  // قم بتحويل الاستجابة إلى JSON
+    })
+    .then(data => {
+        console.log('Data received:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 
-
+    document.getElementById("ValidatingX509Certificates").value = '';
+} else {
+    console.log("Token is not updated");
+}
+});
