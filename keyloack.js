@@ -17,37 +17,45 @@ const keycloak = Keycloak({
      const postLogoutRedirect = 'https://lujainsallam1.github.io/saml/';
      window.location.href =`http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientid}`;
   });
-  
-  keycloak
-    .init({ onLoad: 'login-required' })
-    .then((authenticated) => {
-      if (authenticated) {
-        accessToken = keycloak.token;
-        console.log(`Access Token: ${accessToken}`);
-  
-        // Check if the user has the "admin" role
-       const tokenParsed = keycloak.tokenParsed;
-        const roles = tokenParsed.realm_access.roles;
-  
 
+keycloak
+  .init({ onLoad: 'login-required' })
+  .then((authenticated) => {
+    if (authenticated) {
+      accessToken = keycloak.token;
+      console.log(`Access Token: ${accessToken}`);
+
+      // Check if authentication was successful
+      const tokenParsed = keycloak.tokenParsed;
+      if (tokenParsed) {
+        // Check if the user has the "admin" role
+        const roles = tokenParsed.realm_access.roles;
         if (roles.includes("admin")) {
           console.log("User has 'admin' role");
         } else {
           alert("User does not have admin role. Access denied.");
-             const clientid='frontend';
-             const postLogoutRedirect = 'https://lujainsallam1.github.io/saml/';
-             window.location.href =`http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientid}`;
-         
+          const clientid = 'frontend';
+          const postLogoutRedirect = 'https://lujainsallam1.github.io/saml/';
+          window.location.href = http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientid};
         }
-        console.log("Access Token:", keycloak.token);
 
-      }
-   else {
+        // Set interval for token refresh
+        setInterval(() => {
+          keycloak.updateToken(180).then((bool) => {
+            if (bool) {
+              console.log("Token is updated");
+            } else {
+              console.log("Token is not updated");
+            }
+          });
+        }, 126000);
+      } else {
         alert("User authentication failed!");
-       
       }
-    })
-    .catch(() => {
-      alert("Could not authenticate the user!");
-    });
-  
+    } else {
+      alert("User authentication failed!");
+    }
+  })
+  .catch(() => {
+    alert("Could not authenticate the user!");
+  });
