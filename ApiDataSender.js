@@ -33,7 +33,8 @@ buttonInput.addEventListener('click', () => {
     ClassRefs_inputs.forEach(input =>{
             if (input.value.trim() !== "") {
         authnContextClassRefs.push(input.value);
-        }
+        }  
+    });
     console.log(authnContextClassRefs);
     const authnContextDeclRefs=[]
     const DeclRefs_inputs = DeclRefs_items.querySelectorAll("input");
