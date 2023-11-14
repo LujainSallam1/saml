@@ -33,8 +33,9 @@ buttonInput.addEventListener('click', () => {
   
     const authnContextClassRefs=[]
     const ClassRefs_inputs= ClassRefs_items.querySelectorAll("input");
-    const converted_value=`\"${input.value}\"`;
-    ClassRefs_inputs.forEach(input =>{authnContextClassRefs.push(converted_value)});
+    ClassRefs_inputs.forEach(input =>{
+        const converted_value=`\"${input.value}\"`;
+        authnContextClassRefs.push(converted_value)});
     console.log(authnContextClassRefs);
     const authnContextDeclRefs=[]
     const DeclRefs_inputs = DeclRefs_items.querySelectorAll("input");
