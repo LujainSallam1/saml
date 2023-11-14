@@ -31,12 +31,17 @@ buttonInput.addEventListener('click', () => {
     const authnContextClassRefs=[]
     const ClassRefs_inputs= ClassRefs_items.querySelectorAll("input");
     ClassRefs_inputs.forEach(input =>{
-        authnContextClassRefs.push(input.value)});
+            if (input.value.trim() !== "") {
+        authnContextClassRefs.push(input.value);
+        }
     console.log(authnContextClassRefs);
     const authnContextDeclRefs=[]
     const DeclRefs_inputs = DeclRefs_items.querySelectorAll("input");
     DeclRefs_inputs.forEach(input =>{
-        authnContextDeclRefs.push(input.value)});
+        if (input.value.trim() !== "") {
+        authnContextDeclRefs.push(input.value);
+        }
+    });
     console.log(authnContextDeclRefs);
     const redirectUri = redirectUriInput.value;
     const SamlExtended = SamlExtendedInput.value;
