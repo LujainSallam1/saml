@@ -26,10 +26,7 @@ buttonInput.addEventListener('click', () => {
     keycloak.updateToken(180).then((bool) => {
     if (bool) {
       console.log("Token is updated");
-      newAccessToken = keycloak.token;
-
-      // بعد ذلك يُمكنك استخدام الـ Access Token لإرسال الطلب HTTP
-    
+      newAccessToken = keycloak.token;    
   
     const authnContextClassRefs=[]
     const ClassRefs_inputs= ClassRefs_items.querySelectorAll("input");
@@ -81,10 +78,10 @@ buttonInput.addEventListener('click', () => {
         "postBrokerLoginFlowAlias": postLoginFlow,
         config: {
             "postBindingLogout": httpPostBindingLogout_value,
-            "authnContextClassRefs": JSON.stringify(authnContextClassRefs),
+            "authnContextClassRefs": authnContextClassRefs.length > 0 ? JSON.stringify(authnContextClassRefs) : undefined,
             "postBindingResponse": httpPostBindingResponse_value,
             "singleLogoutServiceUrl": Single_Logout_Service_URL,
-            "authnContextDeclRefs":JSON.stringify(authnContextDeclRefs),
+            "authnContextDeclRefs": authnContextDeclRefs.length > 0 ? JSON.stringify(authnContextDeclRefs) : undefined,
             "backchannelSupported": backchannel_value,
             "xmlSigKeyInfoKeyNameTransformer":SAMLSignatureKeyName,
             "idpEntityId": Identity_Provider_Entity_ID,
@@ -124,7 +121,6 @@ buttonInput.addEventListener('click', () => {
 
     removeEmptyStrings(data);
 
-    // التحقق من وجود قيم في الحقول داخل config
     const configKeys = Object.keys(data.config);
     for (const key of configKeys) {
         if (typeof data.config[key] === 'string' && data.config[key].trim() === "") {
@@ -141,7 +137,6 @@ buttonInput.addEventListener('click', () => {
 
     
 
-    // إرسال البيانات إلى الخادم
 console.log(data);
 
 fetch(url, {
