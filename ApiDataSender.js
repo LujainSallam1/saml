@@ -42,7 +42,7 @@ buttonInput.addEventListener('click', () => {
     DeclRefs_inputs.forEach(input =>{
          const converted_value_DeclRefs=`\\"${input.value}\\"`;
         authnContextDeclRefs.push(converted_value_DeclRefs)});
-    console.log(authnContextClassRefs);
+    console.log(authnContextDeclRefs);
     const redirectUri = redirectUriInput.value;
     const SamlExtended = SamlExtendedInput.value;
     const button = buttonInput.value;
