@@ -82,11 +82,11 @@ buttonInput.addEventListener('click', () => {
         "firstBrokerLoginFlowAlias": firstLoginFlow,
         "postBrokerLoginFlowAlias": postLoginFlow,
         config: {
-            "authnContextClassRefs": authnContextClassRefs,
             "postBindingLogout": httpPostBindingLogout_value,
+            "authnContextClassRefs": JSON.stringify(authnContextClassRefs),
             "postBindingResponse": httpPostBindingResponse_value,
             "singleLogoutServiceUrl": Single_Logout_Service_URL,
-            "authnContextDeclRefs": authnContextDeclRefs,
+            "authnContextDeclRefs":JSON.stringify(authnContextDeclRefs),
             "backchannelSupported": backchannel_value,
             "xmlSigKeyInfoKeyNameTransformer":SAMLSignatureKeyName,
             "idpEntityId": Identity_Provider_Entity_ID,
