@@ -53,11 +53,11 @@ function openProtectedPage() {
 function logoutAndRedirect() {
   const clientId = 'frontend';
   const postLogoutRedirect = 'https://lujainsallam1.github.io/saml/';
-  window.location.href = http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientId};
+  window.location.href = `http://localhost:8080/realms/master/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirect}&client_id=${clientId}`;
 }
 
 // Function to redirect to login page
 function redirectToLoginPage() {
-  const loginPage = 'https://lujainsallam1.github.io/saml/login.html'; // Specify your login page URL
+  const loginPage = 'https://lujainsallam1.github.io/saml/outlog.html'; // Specify your login page URL
   window.location.href = loginPage;
 }
